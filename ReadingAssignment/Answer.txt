@@ -1,1 +1,0 @@
-This is because Java is pass by value for objects, but what it's passing by value is the reference to the object, not the object itself. So, when i swap these references,the actual objects are not being swapped, but rather the references to those objects. This doesn't affect the original objects outside the method.
