@@ -1,6 +1,6 @@
 package hust.soict.globalict.aims.screen.manager;
 
-import javax.print.attribute.standard.Media;
+import hust.soict.globalict.aims.media.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.awt.*;
 
 import hust.soict.globalict.aims.store.Store;
 
-public class StoreManagerScreen {
+public class StoreManagerScreen extends JFrame{
 	private Store store;
 	
 	JPanel createNorth() {
@@ -17,9 +17,7 @@ public class StoreManagerScreen {
 		north.add(createMenuBar());
 		north.add(createHeader());
 		return north;
-
 	}
-	
 	
 	JMenuBar createMenuBar() {
 		JMenu menu = new JMenu("Options");
@@ -37,7 +35,6 @@ public class StoreManagerScreen {
 		menuBar.add(menu);
 
 		return menuBar;
-		
 	}
 	
 	JPanel createHeader() {
@@ -54,22 +51,32 @@ public class StoreManagerScreen {
 		header.add(Box.createRigidArea(new Dimension(10, 10)));
 
 		return header;
-
 	}
 	
 	JPanel createCenter() {
-
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(3, 3, 2, 2));
 
 		ArrayList<Media> mediaInStore = store.getItemsInStore();
 		for (int i = 0; i < 9; i++) {
-		MediaStore cell = new MediaStore(mediaInStore.get(i));
-		center.add(cell);
-
+			MediaStore cell = new MediaStore(mediaInStore.get(i));
+			center.add(cell);	
 		}
-
 		return center;
-
 	}
+	
+	public StoreManagerScreen(Store store) {
+		this.store = store;
+
+		Container cp = getContentPane();
+		cp.setLayout(new BorderLayout());
+		cp.add(createNorth(), BorderLayout.NORTH);
+		cp.add(createCenter(), BorderLayout.CENTER);
+
+		setTitle("Store");
+		setSize(1024, 768);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+	
 }
