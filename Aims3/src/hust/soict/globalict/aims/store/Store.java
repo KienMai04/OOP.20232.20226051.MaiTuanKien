@@ -1,11 +1,13 @@
 package hust.soict.globalict.aims.store;
 
-import hust.soict.globalict.aims.disc.DigitalVideoDisc;
+import java.util.ArrayList;
+import hust.soict.globalict.aims.media.Media;
+import hust.soict.globalict.aims.media.DigitalVideoDisc;
 
 public class Store {
 	public static final int MAX_NUM_DVD = 10000;
 	private int dvdStored = 0;
-	private DigitalVideoDisc itemsInStore[] =  new DigitalVideoDisc[MAX_NUM_DVD];
+	private static ArrayList<Media> itemsInStore = new ArrayList<Media> ();
 	
 	public int getDvdStored() {
 		return dvdStored;
@@ -20,24 +22,23 @@ public class Store {
 		if (count >= MAX_NUM_DVD) {
 			System.out.println("Het cho trong");
 		} else {
-			this.itemsInStore[count] = dvd;
+			itemsInStore.add(dvd);
 			System.out.println("Da them");
-			count = count + 1;
-			this.setDvdStored(count);
+			this.setDvdStored(count + 1);
 		}
 	}
+	
 	public void removeDVD(DigitalVideoDisc dvd) {
-		DigitalVideoDisc itemsTempStored[] = new DigitalVideoDisc[this.getDvdStored()-1];
-		for (int i = 0, j = 0; i < this.getDvdStored(); i++) {
-			if (!this.itemsInStore[i].getTitle().equals(dvd.getTitle())) {
-				itemsTempStored[j] = this.itemsInStore[i];
-				j++;
-			}
-		}
-		for (int k = 0; k < this.getDvdStored() - 1; k++) {
-			this.itemsInStore[k] = itemsTempStored[k];
-		}
-		System.out.println("Da xoa");
-		this.setDvdStored(this.getDvdStored() - 1);
+		if (itemsInStore.contains(dvd)) {
+            itemsInStore.remove(dvd);
+            System.out.println("Deleted!");
+            this.setDvdStored(this.getDvdStored() - 1);
+        } else {
+            System.out.println("Cannot find!");
+        }
+	}
+
+	public ArrayList<Media> getItemsInStore() {
+		return new ArrayList<>(itemsInStore);
 	}
 }
